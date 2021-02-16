@@ -14,27 +14,35 @@
 	<!-- Root Context: defines shared resources visible to all other web components -->
 	<context:annotation-config />
 	
-	<bean id="dataSource" class="org.apache.commons.dbcp.BasicDataSource">
-		<property name="driverClassName" value="oracle.jdbc.driver.OracleDriver" />
-		<property name="url" value="jdbc:mysql://localhost:3306/hello?useSSL=false&amp;serverTimezone=Asia/Seoul" />
-		<property name="username" value="hello" />
-		<property name="password" value="" />
-		<!-- <property name="maxActive" value="8" />  -->
+	 <bean id="dataSourceSpy" class="org.springframework.jndi.JndiObjectFactoryBean">
+    	<property name="jndiName" value="jdbc/mariadb" />
+    	<property name="resourceRef" value="true" />
+    </bean>
+	<bean id="dataSource" class="net.sf.log4jdbc.Log4jdbcProxyDataSource">
+	    <constructor-arg ref="dataSourceSpy" />
+	    <property name="logFormatter">
+	        <bean class="net.sf.log4jdbc.tools.Log4JdbcCustomFormatter">
+	            <property name="loggingType" value="MULTI_LINE" />
+	            <property name="sqlPrefix" value="SQL : "/>
+	        </bean>
+	    </property>
 	</bean>
-	
-	<!-- myBatis 환경 설정 -->
-	<bean id="sqlSessionFactory" class="org.mybatis.spring.SqlSessionFactoryBean">
-		<property name="dataSource" ref="dataSource" />
-		<property name="configLocation" value="classpath:/resources/mybatis-config.xml" />
-	</bean>
-	
-	<bean id="sqlSession" class="org.mybatis.spring.SqlSessionTemplate">
-		<constructor-arg index="0" ref="sqlSessionFactory" />
-	</bean>
+    <bean id="transactionManager" class="org.springframework.jdbc.datasource.DataSourceTransactionManager">
+   		 <property name="dataSource" ref="dataSource" />
+    </bean>
+    <bean id="sqlSessionFactory" class="org.mybatis.spring.SqlSessionFactoryBean">
+        <property name="dataSource" ref="dataSource" />
+		<property name="mapperLocations" value="classpath:/sql/*.xml" />
+		<property name="configLocation" value="classpath:/mybatis-config.xml"/>
+    </bean>
+    
+    <bean id="sqlSession" class="org.mybatis.spring.SqlSessionTemplate">
+         <constructor-arg index="0" ref="sqlSessionFactory"/>
+          <constructor-arg index="1" value="SIMPLE"/>
+    </bean>
+    
+    
 	
 	<tx:annotation-driven />
 	
-	<bean id="transactionManager" class="org.springframework.jdbc.datasource.DataSourceTransactionManager">
-		<property name="dataSource" ref="dataSource" />
-	</bean>
 </beans>

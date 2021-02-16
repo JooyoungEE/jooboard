@@ -15,7 +15,4 @@
 		<typeAlias alias="mVO" type="com.jooboard.joo.vo.MemberVO" />
 	</typeAliases>
 	
-	<mappers>
-		<mapper resource="/resources/sql/test.xml"/>
-	</mappers>
 </configuration>
