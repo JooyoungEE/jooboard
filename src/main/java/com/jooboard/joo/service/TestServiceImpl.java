@@ -22,6 +22,7 @@ public class TestServiceImpl implements TestService{
     
     @Override
 	public MemberVO selectTest(MemberVO memberVO) throws Exception {
+    	9
 		return testDAO.getInfo(memberVO);
     }
 }
