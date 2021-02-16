@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE configuration
+    PUBLIC "-//mybatis.org//DTD Config 3.0//EN"
+    "http://mybatis.org/dtd/mybatis-3-config.dtd">
+<configuration>
+	<!-- myBatis의 활동 방식 설정 -->
+	<settings>
+		<setting name="cacheEnabled" value="false" />
+		<setting name="useGeneratedKeys" value="true" />
+		<setting name="defaultExecutorType" value="REUSE" />
+	</settings>
+	
+	<!-- 마이바티스에서 사용할 자바 타입의 별칭 선언하는 부분...	 -->
+	<typeAliases>
+		<typeAlias alias="mVO" type="com.jooboard.joo.vo.MemberVO" />
+	</typeAliases>
+	
+	<mappers>
+		<mapper resource="/resources/sql/test.xml"/>
+	</mappers>
+</configuration>
