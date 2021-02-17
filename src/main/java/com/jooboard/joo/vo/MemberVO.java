@@ -6,10 +6,24 @@ import java.text.*;
 public class MemberVO {
 	private int mno;
 	private String id, name, pw, mail, sdate;
+	private String user_id;
+	private String user_pw;
 	private Date joinDate;
 	private Time joinTime;
 	public int getMno() {
 		return mno;
+	}
+	public String getUser_id() {
+		return user_id;
+	}
+	public void setUser_id(String user_id) {
+		this.user_id = user_id;
+	}
+	public String getUser_pw() {
+		return user_pw;
+	}
+	public void setUser_pw(String user_pw) {
+		this.user_pw = user_pw;
 	}
 	public void setMno(int mno) {
 		this.mno = mno;
