@@ -11,6 +11,7 @@
  *
  * Date: 2020-05-04T22:49Z
  */
+/*가나다*/
 ( function( global, factory ) {
 
 	"use strict";

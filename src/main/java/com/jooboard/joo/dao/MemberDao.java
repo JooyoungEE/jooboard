@@ -20,13 +20,9 @@ public class MemberDao {
 		return sqlSession.selectOne("mSQL.login", mVO);
 	}
 	
-//	//회원가입
-//	public int insertMember(MemberVO mVO) {
-//		return sqlSession.insert("mSQL.addMemb", mVO);
-//	}
-
+	//회원가입
 	public int insertMember(ArrayList<MemberVO> list) {
 		System.out.println("★★★★★★★: "+list.get(0).getId());
-		return sqlSession.insert("mSQL.addMemb", list);
+		return sqlSession.insert("mSQL.addMemb", list.get(0));
 	}
 }

@@ -58,7 +58,7 @@ public class MemberController {
 	
 	@RequestMapping(value="/joinProc.joo")
 	@ResponseBody
-	public String joinProc(HttpSession session, MemberVO mVO) {
+	public ModelAndView joinProc(ModelAndView mv, HttpSession session, MemberVO mVO) {
 		String result = "OK";
 		System.out.println("############ vo id " + mVO.getId());
 		ArrayList<MemberVO> list = new ArrayList<MemberVO>();
@@ -72,10 +72,13 @@ public class MemberController {
 		
 		if(cnt == 1) {
 			session.setAttribute("SID", mVO.getId());
+			mv.setViewName("redirect:/main.joo");
+
 		} else {
 			result = "NO";
+			mv.setViewName("redirect:/member/join.joo");
 		}
+		return mv;
 		
-		return result;
 	}
 }

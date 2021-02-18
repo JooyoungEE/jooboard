@@ -1,13 +1,13 @@
-<%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
-<%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
-<html>
+<%@ page language="java" contentType="text/html; charset=utf-8" pageEncoding="utf-8"%>
+<!DOCTYPE html>
 <head>
-<meta charset="UTF-8">
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+<meta charset="UTF-8" />
 <title>Join</title>
 <link rel="stylesheet" type="text/css" href="/resources/css/w3.css">
-<script type="text/javascript" src="/resources/css/joo.css"></script>
-<script type="text/javascript" src="/resources/js/jquery-3.5.1.js"></script>
-<script type="text/javascript" src="/resources/js/join.js" charset="UTF-8"></script>
+<link rel="stylesheet" type="text/css" href="/resources/css/joo.css">
+<script type="text/javascript" src="/resources/js/jquery-3.5.1.js" charset="utf-8"></script>
+<script src="/resources/js/join.js" charset="utf-8"></script>
 </head>
 <body>
 	<div class="w3-content w3-center mw650">
