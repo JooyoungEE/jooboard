@@ -17,7 +17,7 @@ local.properties
 *.class
 /target/
 **/target
-
+target/
 # External tool builders
 .externalToolBuilders/
 
