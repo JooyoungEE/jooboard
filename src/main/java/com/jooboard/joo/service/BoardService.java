@@ -1,5 +1,7 @@
 package com.jooboard.joo.service;
 
+import java.util.*;
+
 import org.springframework.beans.factory.annotation.*;
 import org.springframework.stereotype.Repository;
 import org.springframework.web.servlet.ModelAndView;
@@ -12,14 +14,21 @@ import com.jooboard.joo.vo.*;
 public class BoardService {
 	@Autowired
 	BoardDao bDao;
-	//게시글 등록 
 	
+	//게시글 등록 
+	public void writeBoard(ModelAndView mv, BoardVO bVO, PageUtil page) {
+		bDao.writeBoard(bVO);
+		//page.setNowPage(1);
+		mv.addObject("VIEW", "/board/boardList.joo");
+		//mv.addObject("PAGE", page);
+		mv.setViewName("board/boardRedirect");
+	}
 	//게시글 수정
 	public void editBoard(ModelAndView mv, BoardVO bVO, PageUtil page) {
 		bDao.editBoard(bVO);
-		page.setNowPage(1);
+		//page.setNowPage(1);
 		mv.addObject("VIEW", "/board/boardList.joo");
-		mv.addObject("PAGE", page);
+		//mv.addObject("PAGE", page);
 		mv.setViewName("board/boardRedirect");
 		
 		return;
@@ -30,7 +39,12 @@ public class BoardService {
 		int bno = bVO.getBno();
 		bDao.delBoard(bno);
 		mv.addObject("VIEW", "/board/boardList.joo");
-		mv.addObject("PAGE", page);
+		//mv.addObject("PAGE", page);
 		mv.setViewName("board/boardRedirect");
+	}
+	
+	//게시글 목록 조회
+	List<BoardVO> getList(PagingCriteria paging){
+		return bDao.getList(paging);
 	}
 }

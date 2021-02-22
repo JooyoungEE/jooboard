@@ -4,13 +4,14 @@ import java.util.*;
 
 import org.springframework.beans.factory.annotation.*;
 import org.springframework.stereotype.*;
+import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.ModelAndView;
 
 import com.jooboard.joo.dao.BoardDao;
 import com.jooboard.joo.service.BoardService;
 import com.jooboard.joo.util.PageUtil;
-import com.jooboard.joo.vo.BoardVO;
+import com.jooboard.joo.vo.*;
 
 @Controller
 @RequestMapping("/board")
@@ -23,17 +24,12 @@ public class BoardController {
 	
 	//게시판 리스트
 	@RequestMapping("/boardList.joo") 
-	public ModelAndView board(ModelAndView mv, PageUtil page) {
-		int total = bDao.getTotal();
-		page.setPage(total, 5, 5);
-		
-		List<BoardVO> list = bDao.getList(page);
-		
-		mv.addObject("PAGE", page);
-		mv.addObject("LIST", list);
-		
-		mv.setViewName("board/boardList");
-		return mv;
+	public String board(Model model, PagingCriteria pCri) {
+		int total = bDao.getTotal(); 
+		List<BoardVO> boardList = bDao.getList(pCri);
+		model.addAttribute("boardList", boardList);
+		model.addAttribute("paging", new PageMaker(pCri, total));
+		return "board/boardList";
 	}
 	
 	//게시글 상세보기
@@ -54,7 +50,7 @@ public class BoardController {
 		List<Map> list = bDao.getEditDetail(bno);
 
 		mv.addObject("LIST", list);
-		mv.addObject("PAGE", page);
+//		mv.addObject("PAGE", page);
 		mv.setViewName("board/boardEdit");
 		return mv;
 	}
@@ -70,6 +66,24 @@ public class BoardController {
 	@RequestMapping("/boardDel.joo")
 	public ModelAndView boardDel(ModelAndView mv, BoardVO bVO, PageUtil page) {
 		bSrvc.delBoard(mv, bVO, page);
+		return mv;
+	}
+	
+	//게시글 작성 폼보기
+	@RequestMapping("/boardWrite.joo")
+	public ModelAndView boardWrite(ModelAndView mv, BoardVO bVO, PageUtil page) {
+		System.out.println("############## controller boardWrite");
+		
+		mv.addObject("PAGE", page);
+		mv.setViewName("board/boardWrite");
+		
+		return mv;
+	}
+	
+	//게시글 작성
+	@RequestMapping("/boardWriteProc.joo")
+	public ModelAndView boardWriteProc(BoardVO bVO, ModelAndView mv, PageUtil page) {
+		bSrvc.writeBoard(mv, bVO, page);
 		return mv;
 	}
 }

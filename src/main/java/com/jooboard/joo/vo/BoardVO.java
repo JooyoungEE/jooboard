@@ -7,7 +7,8 @@ import java.util.Date;
 
 public class BoardVO {
 	private int bno;
-	private String title, body, writer, bdate, isshow;
+	private int limit, page, startPage, endPage, maxPage;
+	private String title, body, writer, bdate, isshow, id;
 	private Date wdate;
 	private Time wtime;
 	public int getBno() {
@@ -50,6 +51,12 @@ public class BoardVO {
 	public void setIsshow(String isshow) {
 		this.isshow = isshow;
 	}
+	public String getId() {
+		return id;
+	}
+	public void setId(String id) {
+		this.id = id;
+	}
 	public Date getWdate() {
 		return wdate;
 	}
@@ -61,6 +68,36 @@ public class BoardVO {
 	}
 	public void setWtime(Time wtime) {
 		this.wtime = wtime;
+	}
+	public int getLimit() {
+		return limit;
+	}
+	public void setLimit(int limit) {
+		this.limit = limit;
+	}
+	public int getPage() {
+		return page;
+	}
+	public void setPage(int page) {
+		this.page = page;
+	}
+	public int getStartPage() {
+		return startPage;
+	}
+	public void setStartPage(int startPage) {
+		this.startPage = startPage;
+	}
+	public int getEndPage() {
+		return endPage;
+	}
+	public void setEndPage(int endPage) {
+		this.endPage = endPage;
+	}
+	public int getMaxPage() {
+		return maxPage;
+	}
+	public void setMaxPage(int maxPage) {
+		this.maxPage = maxPage;
 	}
 	
 	

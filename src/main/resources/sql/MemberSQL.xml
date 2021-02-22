@@ -37,13 +37,37 @@
 			isshow = 'Y'
 	</select>
 	
-	<select id="getList" resultType="bVO" parameterType="page">
-		SELECT
-			bno, title, body, bdate, writer
-		FROM
-			board
-		WHERE
-			isshow = 'Y'
+	<select id="getList" resultType="bVO">
+		<!-- SELECT bno, title, BODY, bdate, writer 
+		FROM	
+			(
+				SELECT 
+					@ROWNUM := @ROWNUM +1 rn, bno, title, BODY, bdate, writer, isshow 
+				FROM 
+					board 
+				WHERE 
+					(@ROWNUM:=0)=0 
+					AND @ROWNUM +1 &lt;= #{pageNum} * #{amount} 
+				ORDER BY rn DESC
+			) AS R
+		WHERE 
+			R.rn BETWEEN #{pageNum} AND #{amount}
+			AND R.isshow = 'Y'
+		 -->
+		 
+		SELECT bno, title, BODY, bdate, writer 
+		FROM	
+			(
+				SELECT 
+					row_number() over( order by bno desc) rn, bno, title, BODY, bdate, writer, isshow 
+				FROM 
+					board 
+				WHERE
+					isshow = 'Y'
+			) AS R
+		WHERE 
+			R.rn BETWEEN (#{pageNum} *#{amount}) - (#{amount}-1) AND #{pageNum}*#{amount}
+			AND R.isshow = 'Y'
 	</select>
 	
 	<select id="getDetail" resultType="bVO" parameterType="int">
@@ -65,7 +89,7 @@
 			bno = #{bno}
 	</update>
 	
-	<insert id="addBoard" parameterType="bVO">
+	<insert id="writeBoard" parameterType="bVO">
 		<selectKey keyProperty="bno" resultType="int" order="BEFORE">
 			SELECT
 				COALESCE(MAX(bno) + 1, 1001)

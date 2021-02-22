@@ -7,7 +7,7 @@ import org.springframework.beans.factory.annotation.*;
 import org.springframework.stereotype.Repository;
 
 import com.jooboard.joo.util.PageUtil;
-import com.jooboard.joo.vo.BoardVO;
+import com.jooboard.joo.vo.*;
 
 @Repository
 public class BoardDao {
@@ -20,8 +20,8 @@ public class BoardDao {
 	}
 	
 	//게시글 리스트 조회
-	public List<BoardVO> getList(PageUtil page){
-		return sqlSession.selectList("mSQL.getList", page);
+	public List<BoardVO> getList(PagingCriteria paging){
+		return sqlSession.selectList("mSQL.getList", paging);
 	}
 	
 	//게시글 내용 조회
@@ -42,5 +42,10 @@ public class BoardDao {
 	//게시글 삭제
 	public int delBoard(int bno) {
 		return sqlSession.update("mSQL.delBoard", bno);
+	}
+	
+	//게시글 작성
+	public int writeBoard(BoardVO bVO) {
+		return sqlSession.insert("mSQL.writeBoard", bVO);
 	}
 }
