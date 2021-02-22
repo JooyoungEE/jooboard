@@ -1,4 +1,3 @@
-
 package com.jooboard.joo.dao;
 
 import java.util.*;
@@ -7,7 +6,6 @@ import org.mybatis.spring.SqlSessionTemplate;
 import org.springframework.beans.factory.annotation.*;
 import org.springframework.stereotype.Repository;
 
-import com.jooboard.joo.util.PageUtil;
 import com.jooboard.joo.vo.*;
 
 @Repository

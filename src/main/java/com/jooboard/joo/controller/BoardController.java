@@ -10,7 +10,6 @@ import org.springframework.web.servlet.ModelAndView;
 
 import com.jooboard.joo.dao.BoardDao;
 import com.jooboard.joo.service.BoardService;
-import com.jooboard.joo.util.PageUtil;
 import com.jooboard.joo.vo.*;
 
 @Controller
@@ -44,37 +43,35 @@ public class BoardController {
 
 	//게시글 수정 폼보기
 	@RequestMapping(value="/boardEdit.joo", method= {RequestMethod.POST})
-	public ModelAndView boardEdit(ModelAndView mv, BoardVO bVO, PageUtil page) {
+	public ModelAndView boardEdit(ModelAndView mv, BoardVO bVO) {
 		int bno = bVO.getBno();
 		System.out.println("test1 "+bVO.getBno());
 		List<Map> list = bDao.getEditDetail(bno);
 
 		mv.addObject("LIST", list);
-//		mv.addObject("PAGE", page);
 		mv.setViewName("board/boardEdit");
 		return mv;
 	}
 	
 	//게시글 수정
 	@RequestMapping("/boardEditProc.joo")
-	public ModelAndView boardEditProc(BoardVO bVO, ModelAndView mv, PageUtil page) {
-		bSrvc.editBoard(mv, bVO, page);
+	public ModelAndView boardEditProc(BoardVO bVO, ModelAndView mv) {
+		bSrvc.editBoard(mv, bVO);
 		return mv;
 	}
 	
 	//게시글 삭제
 	@RequestMapping("/boardDel.joo")
-	public ModelAndView boardDel(ModelAndView mv, BoardVO bVO, PageUtil page) {
-		bSrvc.delBoard(mv, bVO, page);
+	public ModelAndView boardDel(ModelAndView mv, BoardVO bVO) {
+		bSrvc.delBoard(mv, bVO);
 		return mv;
 	}
 	
 	//게시글 작성 폼보기
 	@RequestMapping("/boardWrite.joo")
-	public ModelAndView boardWrite(ModelAndView mv, BoardVO bVO, PageUtil page) {
+	public ModelAndView boardWrite(ModelAndView mv, BoardVO bVO) {
 		System.out.println("############## controller boardWrite");
 		
-		mv.addObject("PAGE", page);
 		mv.setViewName("board/boardWrite");
 		
 		return mv;
@@ -82,8 +79,8 @@ public class BoardController {
 	
 	//게시글 작성
 	@RequestMapping("/boardWriteProc.joo")
-	public ModelAndView boardWriteProc(BoardVO bVO, ModelAndView mv, PageUtil page) {
-		bSrvc.writeBoard(mv, bVO, page);
+	public ModelAndView boardWriteProc(BoardVO bVO, ModelAndView mv) {
+		bSrvc.writeBoard(mv, bVO);
 		return mv;
 	}
 }

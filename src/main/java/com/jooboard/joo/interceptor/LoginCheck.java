@@ -13,7 +13,6 @@ public class LoginCheck implements HandlerInterceptor{
 		HttpSession session = request.getSession();
 		String sid = (String) session.getAttribute("SID");
 		if(sid == null || sid.length() == 0) {
-			System.out.println("##############################");
 			response.sendRedirect("/member/login.joo");
 			return false;	
 		}

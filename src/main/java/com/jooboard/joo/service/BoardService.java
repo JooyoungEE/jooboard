@@ -1,4 +1,3 @@
-
 package com.jooboard.joo.service;
 
 import java.util.*;
@@ -8,7 +7,6 @@ import org.springframework.stereotype.Repository;
 import org.springframework.web.servlet.ModelAndView;
 
 import com.jooboard.joo.dao.*;
-import com.jooboard.joo.util.*;
 import com.jooboard.joo.vo.*;
 
 @Repository
@@ -17,30 +15,25 @@ public class BoardService {
 	BoardDao bDao;
 	
 	//게시글 등록 
-	public void writeBoard(ModelAndView mv, BoardVO bVO, PageUtil page) {
+	public void writeBoard(ModelAndView mv, BoardVO bVO) {
 		bDao.writeBoard(bVO);
-		//page.setNowPage(1);
 		mv.addObject("VIEW", "/board/boardList.joo");
-		//mv.addObject("PAGE", page);
 		mv.setViewName("board/boardRedirect");
 	}
 	//게시글 수정
-	public void editBoard(ModelAndView mv, BoardVO bVO, PageUtil page) {
+	public void editBoard(ModelAndView mv, BoardVO bVO) {
 		bDao.editBoard(bVO);
-		//page.setNowPage(1);
 		mv.addObject("VIEW", "/board/boardList.joo");
-		//mv.addObject("PAGE", page);
 		mv.setViewName("board/boardRedirect");
 		
 		return;
 	}
 	
 	//게시글 삭제
-	public void delBoard(ModelAndView mv, BoardVO bVO, PageUtil page) {
+	public void delBoard(ModelAndView mv, BoardVO bVO) {
 		int bno = bVO.getBno();
 		bDao.delBoard(bno);
 		mv.addObject("VIEW", "/board/boardList.joo");
-		//mv.addObject("PAGE", page);
 		mv.setViewName("board/boardRedirect");
 	}
 	
