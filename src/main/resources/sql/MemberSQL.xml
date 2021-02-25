@@ -4,7 +4,7 @@
 		"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 
 <mapper namespace="mSQL">
-	<select id="login" resultType="int" parameterType="com.jooboard.joo.vo.MemberVO">
+	<select id="login" resultType="int" parameterType="mVO">
 		SELECT
 			count(*) cnt
 		FROM	
@@ -28,42 +28,76 @@
 	</insert>
 	
 	<!-- board -->
-	<select id="getTotal" resultType="int">
+	<select id="getTotal" resultType="int" parameterType="pCri">
 		SELECT 
 			count(*)
-		FROM 
-			board
-		WHERE 
-			isshow = 'Y'
-	</select>
-	
-	<select id="getList" resultType="bVO">
-		<!-- SELECT bno, title, BODY, bdate, writer 
 		FROM	
 			(
 				SELECT 
-					@ROWNUM := @ROWNUM +1 rn, bno, title, BODY, bdate, writer, isshow 
-				FROM 
-					board 
-				WHERE 
-					(@ROWNUM:=0)=0 
-					AND @ROWNUM +1 &lt;= #{pageNum} * #{amount} 
-				ORDER BY rn DESC
-			) AS R
-		WHERE 
-			R.rn BETWEEN #{pageNum} AND #{amount}
-			AND R.isshow = 'Y'
-		 -->
-		 
-		SELECT bno, title, BODY, bdate, writer 
-		FROM	
-			(
-				SELECT 
-					row_number() over( order by bno desc) rn, bno, title, BODY, bdate, writer, isshow 
+					ROW_NUMBER() OVER(ORDER BY bno DESC) rn, bno, title, BODY, bdate, writer, isshow 
 				FROM 
 					board 
 				WHERE
 					isshow = 'Y'
+					<if test="keyword != '' and keyword != null">
+						<if test="searchOption == 0">
+							AND title LIKE concat('%', #{keyword}, '%')
+						</if>
+						<if test="searchOption == 1">
+							AND writer LIKE concat('%', #{keyword}, '%')
+						</if>
+						<if test="searchOption == 2">
+							AND BODY LIKE concat('%', #{keyword}, '%')
+						</if>
+					</if>
+					<if test="sDate != '' and sDate != null">
+						AND DATE_FORMAT(bdate, '%Y%m%d') BETWEEN STR_TO_DATE(#{sDate}, '%Y%m%d') AND STR_TO_DATE(#{eDate}, '%Y%m%d')
+					</if>
+			) AS R
+		WHERE 
+			R.isshow = 'Y'
+	</select>
+	
+	<!-- <select id="getList" resultType="bVO">
+		SELECT bno, title, BODY, bdate, writer 
+		FROM	
+			(
+				SELECT 
+					row_number() over(order by bno desc) rn, bno, title, BODY, bdate, writer, isshow 
+				FROM 
+					board 
+				WHERE
+					isshow = 'Y'
+			) AS R
+		WHERE 
+			R.rn BETWEEN (#{pageNum} *#{amount}) - (#{amount}-1) AND #{pageNum}*#{amount}
+			AND R.isshow = 'Y'
+	</select> -->
+	
+	<select id="getSearchList" resultType="bVO" parameterType="pCri">
+		SELECT bno, title, BODY, bdate, writer 
+		FROM	
+			(
+				SELECT 
+					ROW_NUMBER() OVER(ORDER BY bno DESC) rn, bno, title, BODY, bdate, writer, isshow 
+				FROM 
+					board 
+				WHERE
+					isshow = 'Y'
+					<if test="keyword != '' and keyword != null">
+						<if test="searchOption == 0">
+							AND title LIKE concat('%', #{keyword}, '%')
+						</if>
+						<if test="searchOption == 1">
+							AND writer LIKE concat('%', #{keyword}, '%')
+						</if>
+						<if test="searchOption == 2">
+							AND BODY LIKE concat('%', #{keyword}, '%')
+						</if>
+					</if>
+					<if test="sDate != '' and sDate != null">
+						AND DATE_FORMAT(bdate, '%Y%m%d') BETWEEN STR_TO_DATE(#{sDate}, '%Y%m%d') AND STR_TO_DATE(#{eDate}, '%Y%m%d')
+					</if>
 			) AS R
 		WHERE 
 			R.rn BETWEEN (#{pageNum} *#{amount}) - (#{amount}-1) AND #{pageNum}*#{amount}
@@ -127,5 +161,74 @@
 		WHERE
 			bno = #{bno}
 	</update>
+	
+	<select id="getReplyList" resultType="rVO" parameterType="int">
+		SELECT 
+			rno, rbno, rmno, rbody, rwriter, rdate, depth
+		FROM 
+			reply r
+		WHERE 
+			r.rbno = #{bno}
+			AND risshow = 'Y'
+	</select>
+	
+	<insert id="addComment" parameterType="rVO">
+		<selectKey keyProperty="rno" resultType="int" order="BEFORE">
+			SELECT
+				COALESCE(MAX(rno) + 1, 10001)
+			FROM
+				reply
+		</selectKey>
+			INSERT INTO
+				reply(rno, rbno, rbody, rwriter)
+			VALUES
+				(#{rno}, #{bno}, #{rbody}, #{rwriter})
+	</insert>
+	
+	<insert id="addReComment" parameterType="rVO">
+		<selectKey keyProperty="rno" resultType="int" order="BEFORE">
+			SELECT
+				COALESCE(MAX(rno) + 1, 10001)
+			FROM
+				reply
+		</selectKey>
+			INSERT INTO
+				reply(rno, rbno, rmno, rbody, rwriter, depth)
+			VALUES
+				(#{rno}, #{rbno}, #{rmno}, #{rbody}, #{rwriter}, 
+					(
+					SELECT 
+						depth + 1
+					FROM 
+						reply A
+					WHERE 
+						A.rno = #{rmno}	
+					) 
+				)
+	</insert>
 
+	<update id="delComment" parameterType="int">
+		UPDATE
+			reply
+		SET
+			risshow = 'N'
+		WHERE
+			rno = #{rno}
+	</update>
+	
+	<update id="editComment" parameterType="rVO">
+		UPDATE
+			reply
+		SET
+			rbody = #{rbody}
+		WHERE
+			rno = #{rno}
+	</update>
+	
+	<select id="getMemberList" resultType="mVO">
+		SELECT
+			mno, name, id, mail, auth
+		FROM
+			member
+	</select>
 </mapper>

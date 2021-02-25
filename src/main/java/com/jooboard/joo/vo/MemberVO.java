@@ -5,7 +5,7 @@ import java.text.*;
 
 public class MemberVO {
 	private int mno;
-	private String id, name, pw, mail, sdate;
+	private String id, name, pw, mail, sdate, auth;
 	private String user_id;
 	private String user_pw;
 	private Date joinDate;
@@ -75,6 +75,12 @@ public class MemberVO {
 	public void setJoinTime(Time joinTime) {
 		this.joinTime = joinTime;
 		setSdate();
+	}
+	public String getAuth() {
+		return auth;
+	}
+	public void setAuth(String auth) {
+		this.auth = auth;
 	}
 	
 }

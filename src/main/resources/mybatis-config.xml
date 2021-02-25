@@ -16,8 +16,7 @@
 		<typeAlias alias="bVO" type="com.jooboard.joo.vo.BoardVO" />
 		<typeAlias alias="pCri" type="com.jooboard.joo.vo.PagingCriteria" />
 		<typeAlias alias="pMake" type="com.jooboard.joo.vo.PageMaker" />
-		
-		<typeAlias alias="page" type="com.jooboard.joo.util.PageUtil" />
+		<typeAlias alias="rVO" type="com.jooboard.joo.vo.ReplyVO" />
 	</typeAliases>
 	
 

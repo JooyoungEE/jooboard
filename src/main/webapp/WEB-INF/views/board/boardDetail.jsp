@@ -11,27 +11,49 @@
 </head>
 <body>
 	<form method="POST" id="frm">
-		<input type="hidden" name="bno" value="${DATA.bno}">
-	
+		<input type="hidden" id="bno" name="bno" value="${DATA.bno}">
+		<input type="hidden" id="sid" name="sid" value="${SID}">
 	<div class="w3-content mw750">
-		<h1 class="w3-indigo w3-center w3-round-large w3-card-4 w3-padding">파일게시글 상세보기</h1>
-		<div class="w3-col pd20 w3-margin-top w3-round-large w3-card-4 w3-padding">
-			<div class="w3-col pd10 w3-margin-top">
+		<h1 class="w3-indigo w3-center w3-round-large w3-card-4 w3-padding">게시글 상세보기</h1>
+		<div class="w3-col w3-margin-top w3-round-large w3-card-4 w3-padding">
+			<div class="w3-col w3-margin-top">
 				<label class="w3-col m2 w3-right-align">작성자 : </label>
-				<div class="w3-col m9 pdl20"><span class="pdl20">${DATA.writer}</span></div>
+				<div class="w3-col m9"><span class="pdl20">${DATA.writer}</span></div>
 			</div>
-			<div class="w3-col pd10 w3-margin-top">
+			<div class="w3-col w3-margin-top">
 				<label class="w3-col m2 w3-right-align">Title : </label>
-				<div class="w3-col m9 pdl20">
-					<div class="w3-col pdl20">${DATA.title}</div>
+				<div class="w3-col m9">
+					<div class="w3-col">${DATA.title}</div>
 				</div>
 			</div>
 			<div class="w3-col w3-margin-top w3-margin-bottom">
 				<label class="w3-col m2 w3-right-align w3-label">Body : </label>
-				<div class="w3-col m9 pdl20">
-					<div class="w3-col h70 pdl20">${DATA.body}</div>
+				<div class="w3-col m9">
+					<div class="w3-col h70">${DATA.body}</div>
 				</div>
 			</div>
+		</div>
+		
+		<!-- 댓글 -->
+		<div class="w3-col w3-margin-top w3-margin-bottom mw750">
+			<div>
+                <span><strong>Comments</strong></span> <span id="cCnt"></span>
+            </div>
+            <div>
+                <table class="table">                    
+                    <tr>
+                        <td>
+                            <textarea style="width: 980px" rows="3" cols="30" id="comment" name="comment" style="resize: none;" placeholder="댓글을 입력하세요"></textarea>
+                            <br>
+                            <div>
+                                <a href="javascript:addComment('${DATA.bno}');" id="rwbtn">등록</a>
+                            </div>
+                        </td>
+                    </tr>
+                </table>
+            </div>
+		</div>
+		<div id="commentList">
 		</div>
 		<div class="w3-col w3-margin-top w3-margin-bottom">
 			<div class="w3-col m3 w3-button w3-card-4 w3-red w3-hover-deep-orange" id="cbtn">취 소</div>

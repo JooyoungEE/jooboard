@@ -29,6 +29,11 @@
 					<div class="w3-col m3" style="padding: 0px 10px;">
 						<h5 class="w3-col w3-center w3-button w3-purple w3-hover-amber w3-card-4" id="bodbtn">BOARD</h5>
 					</div>
+				<c:if test="${SID eq 'admin'}">
+					<div calss="w3-col m3 w3-right" style="padding: 0px 10px;">
+					<h5 class="w3-col m3 w3-button w3-card-4 w3-blue w3-hover-aqua w3-right w3-card-4" id="abtn">ADMIN</h5>
+					</div>
+				</c:if>
 				</div>
 				</div>
 				

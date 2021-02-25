@@ -10,4 +10,8 @@ public class MainController {
 		public String getMain() {
 			return "main";
 	}
+	@RequestMapping("/admin/admin.joo")
+		public String getAdmin() {
+			return "admin/admin";
+	}
 }
