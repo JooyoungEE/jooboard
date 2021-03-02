@@ -4,9 +4,9 @@
 		"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 
 <mapper namespace="mSQL">
-	<select id="login" resultType="int" parameterType="mVO">
+	<select id="login" resultType="mVO" parameterType="mVO">
 		SELECT
-			count(*) cnt
+			*
 		FROM	
 			member
 		WHERE
@@ -231,4 +231,20 @@
 		FROM
 			member
 	</select>
+	
+	<delete id="delMemb" parameterType="int">
+		DELETE 
+			FROM MEMBER 
+		WHERE
+			mno = #{mno}
+	</delete>
+
+	<delete id="editMemb" parameterType="hashmap">
+			UPDATE 
+				MEMBER 
+			SET 
+				auth = #{auth}
+			WHERE 
+				mno = #{mno}
+	</delete>
 </mapper>

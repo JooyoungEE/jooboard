@@ -13,11 +13,12 @@
 	
 	<!-- Root Context: defines shared resources visible to all other web components -->
 	<context:annotation-config />
-	
-	 <bean id="dataSourceSpy" class="org.springframework.jndi.JndiObjectFactoryBean">
+
+	<bean id="dataSourceSpy" class="org.springframework.jndi.JndiObjectFactoryBean">
     	<property name="jndiName" value="jdbc/mariadb" />
     	<property name="resourceRef" value="true" />
     </bean>
+
 	<bean id="dataSource" class="net.sf.log4jdbc.Log4jdbcProxyDataSource">
 	    <constructor-arg ref="dataSourceSpy" />
 	    <property name="logFormatter">
@@ -27,6 +28,7 @@
 	        </bean>
 	    </property>
 	</bean>
+	
     <bean id="transactionManager" class="org.springframework.jdbc.datasource.DataSourceTransactionManager">
    		 <property name="dataSource" ref="dataSource" />
     </bean>
@@ -37,12 +39,11 @@
     </bean>
     
     <bean id="sqlSession" class="org.mybatis.spring.SqlSessionTemplate">
-         <constructor-arg index="0" ref="sqlSessionFactory"/>
-          <constructor-arg index="1" value="SIMPLE"/>
+		<constructor-arg index="0" ref="sqlSessionFactory"/>
+		<constructor-arg index="1" value="SIMPLE"/>
     </bean>
     
     
-	
 	<tx:annotation-driven />
 	
 </beans>

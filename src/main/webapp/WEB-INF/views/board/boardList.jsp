@@ -12,9 +12,18 @@
 <script type="text/javascript" src="/resources/js/boardDateSearch.js"></script>
 <script src="http://ajax.googleapis.com/ajax/libs/jquery/1.7.1/jquery.min.js"></script>  
 <script src="http://code.jquery.com/ui/1.8.18/jquery-ui.min.js"></script>
+
+<%
+HttpSession sess = request.getSession();
+String auth = (String)sess.getAttribute("SAUTH");
+String rauth = auth.substring(0, 1);
+String wauth = auth.substring(1, 2);
+%>
 </head>
 <body>
 	<form method="POST" action="" id="bfrm">
+		<input type="hidden" id="rauth" value="<%=rauth%>">
+		<input type="hidden" id="wauth" value="<%=wauth%>">
 		<input type="hidden" name="bno" id="bno" value="">
 		<input type="hidden" id="pageNum" name="pageNum" value="${paging.cri.pageNum }">
 		<input type="hidden" id="amount" name="amount" value="${paging.cri.amount }">

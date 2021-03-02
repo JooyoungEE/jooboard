@@ -28,13 +28,14 @@ public class MemberController {
 		return "member/login";
 	}
 	
-	@RequestMapping(path="/loginProc.joo", params={"id", "pw"}, method=RequestMethod.POST)
+	@RequestMapping(path="/loginProc.joo", params={"id", "pw" }, method=RequestMethod.POST)
 	public ModelAndView loginProc(ModelAndView mv, RedirectView rd,	HttpSession session, MemberVO mVO) {
-		int cnt = mDao.loginCnt(mVO);
-		if(cnt == 0) {
+		MemberVO mem = mDao.doLogin(mVO);
+		if(mem == null) {
 			rd.setUrl("/member/login.joo");
 		} else {
-			session.setAttribute("SID", mVO.getId());
+			session.setAttribute("SID", mem.getId());
+			session.setAttribute("SAUTH", mem.getAuth());
 			rd.setUrl("/main.joo");
 		}
 		

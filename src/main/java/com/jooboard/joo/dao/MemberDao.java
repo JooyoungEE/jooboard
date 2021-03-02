@@ -16,13 +16,12 @@ public class MemberDao {
 	SqlSessionTemplate sqlSession;
 	
 	//로그인
-	public int loginCnt(MemberVO mVO) {
+	public MemberVO doLogin(MemberVO mVO) {
 		return sqlSession.selectOne("mSQL.login", mVO);
 	}
 	
-	//회원가입
+	//사용자 추가
 	public int insertMember(ArrayList<MemberVO> list) {
-		System.out.println("★★★★★★★: "+list.get(0).getId());
 		return sqlSession.insert("mSQL.addMemb", list.get(0));
 	}
 }

@@ -1,5 +1,9 @@
 $(function(){
 	$('.brow').on('click', function(){
+		if($('#rauth').val() != 1){
+			alert('읽기 권한이 없습니다.');
+			return;
+		}
 		var sno = $(this).attr('id');
 		$('#bno').val(sno);
 		$('#bfrm').attr('action', '/board/boardDetail.joo');
@@ -31,6 +35,10 @@ $(function(){
 	});
 	
 	$('#rbtn').on('click',function(){
+		if($('#wauth').val() != 1){
+			alert('쓰기 권한이 없습니다.');
+			return;
+		}
 		$(location).attr('href', '/board/boardWrite.joo');
 	});
 	
