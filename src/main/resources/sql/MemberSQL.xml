@@ -11,7 +11,7 @@
 			member
 		WHERE
 			id = #{id}
-			AND pw = #{pw}
+			<!-- AND pw = #{pw} -->
 	</select>
 	
 	<insert id="addMemb" parameterType="mVO">

@@ -16,6 +16,7 @@ import com.oreilly.servlet.*;
 import com.oreilly.servlet.multipart.*;
 import com.jooboard.joo.dao.MemberDao;
 import com.jooboard.joo.vo.MemberVO;
+import com.jooboard.joo.util.*;
 
 @Controller
 @RequestMapping("/member")
@@ -30,6 +31,9 @@ public class MemberController {
 	
 	@RequestMapping(path="/loginProc.joo", params={"id", "pw" }, method=RequestMethod.POST)
 	public ModelAndView loginProc(ModelAndView mv, RedirectView rd,	HttpSession session, MemberVO mVO) {
+		String userPW = Security.encrypt(mVO.getPw());
+		mVO.setPw(userPW);
+		
 		MemberVO mem = mDao.doLogin(mVO);
 		if(mem == null) {
 			rd.setUrl("/member/login.joo");
@@ -61,8 +65,11 @@ public class MemberController {
 	@ResponseBody
 	public ModelAndView joinProc(ModelAndView mv, HttpSession session, MemberVO mVO) {
 		String result = "OK";
-		System.out.println("############ vo id " + mVO.getId());
 		ArrayList<MemberVO> list = new ArrayList<MemberVO>();
+		
+		String userPW = Security.encrypt(mVO.getPw());
+		mVO.setPw(userPW);
+		
 		list.add(mVO);
 		int cnt = 0 ;
 		try {
