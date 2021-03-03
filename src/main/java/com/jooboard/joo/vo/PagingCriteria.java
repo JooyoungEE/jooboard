@@ -6,6 +6,7 @@ public class PagingCriteria {
 	private String bno = "";
 	private int pageNum = 1;
 	private int amount = 5;
+	private int block = 10;
 	private String keyword = "", searchOption= "";
 	private String sDate = null, eDate = null;
 	
@@ -20,6 +21,12 @@ public class PagingCriteria {
 	}
 	public void setAmount(int amount) {
 		this.amount = amount;
+	}
+	public int getBlock() {
+		return block;
+	}
+	public void setBlock(int block) {
+		this.block = block;
 	}
 	public String getKeyword() {
 		return keyword;

@@ -10,16 +10,16 @@ public class PageMaker {
 	
 	public PageMaker(PagingCriteria cri, int total) {
 		this.cri = cri;
-		int realEnd = (int)(Math.ceil((total * 1.0)/cri.getAmount()));
-		this.endPage = (int)(Math.ceil(cri.getPageNum() / 10.0) * 10);
-		this.startPage = getEndPage()-9;
+		this.startPage = (int)(cri.getPageNum()%cri.getBlock()) == 0 ? (cri.getPageNum()-9) : (int)((Math.floor(cri.getPageNum() * 0.1)) * 10 + 1);
+		int realEnd = startPage + 9;
+		this.endPage = (int)((total%cri.getAmount()) == 0 ? Math.floor(total/cri.getAmount()) : Math.floor(total/cri.getAmount()) + 1);
+		
+		this.next = getEndPage() > realEnd;
 		
 		if(realEnd < this.endPage) {
 			this.endPage = realEnd;
 		}
-		
-		this.next = getEndPage() < realEnd;
-		this.prev = getStartPage() > 1;
+		this.prev = cri.getPageNum() > cri.getBlock();
 	}
 
 	public int getStartPage() {

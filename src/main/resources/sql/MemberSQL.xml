@@ -58,22 +58,6 @@
 			R.isshow = 'Y'
 	</select>
 	
-	<!-- <select id="getList" resultType="bVO">
-		SELECT bno, title, BODY, bdate, writer 
-		FROM	
-			(
-				SELECT 
-					row_number() over(order by bno desc) rn, bno, title, BODY, bdate, writer, isshow 
-				FROM 
-					board 
-				WHERE
-					isshow = 'Y'
-			) AS R
-		WHERE 
-			R.rn BETWEEN (#{pageNum} *#{amount}) - (#{amount}-1) AND #{pageNum}*#{amount}
-			AND R.isshow = 'Y'
-	</select> -->
-	
 	<select id="getSearchList" resultType="bVO" parameterType="pCri">
 		SELECT bno, title, BODY, bdate, writer 
 		FROM	

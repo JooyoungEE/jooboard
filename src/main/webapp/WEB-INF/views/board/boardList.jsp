@@ -78,7 +78,6 @@ String wauth = auth.substring(1, 2);
 				<a id="next" href="javascript:getList('${paging.endPage + 1 }');">&raquo;</a>
 			</c:if>
 		</div>
-	
 		<!-- 검색기능 -->
 		<div class="w3-col w3-center">
 			<select name="searchOption">
